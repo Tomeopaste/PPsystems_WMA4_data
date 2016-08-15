@@ -21,7 +21,7 @@ setwd("C:/WMA4_Data")
 # Change file path to select the file that needs processing:
 ################################################################################
 putty1 = read.table(
-					file="PuTTyOutput/Chamber3_22Feb_2016.log",
+			file="PuTTyOutput/Chamber3_22Feb_2016.log",
                     skip=1, sep="", blank.lines.skip=TRUE, colClasses="character")
                     
 # Identifying information. For our data we are measuring multiple growth chambers
