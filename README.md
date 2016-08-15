@@ -1,2 +1,10 @@
 # PPsystems_WMA4_data
 Process the deluge of data from a WMA-4 IRGA's analog output
+
+The WMA-4 infrared gas analyzer from PP Systems monitors the carbon dioxide concentration of an air stream, and can also track temperature and relative humidity when appropriate sensors are connected. The WMA-4 outputs data through analog RX and TX pins that can be connected to a PC for logging data. On our systems I've chopped up spare RS-232 cables for use as null modem cables. On the PC end the data can be read and dropped into a text file with a terminal application. We've had good luck with PuTTY (http://www.putty.org/). This is all well and good until you realize that the WMA-4 outputs an observation every (if memory serves me) 1.3 seconds. This frequency is exceptionally high, and may the force be with you if someone in your group makes the misktake of attempting to open one of these files with Excel - I watched a poor undergrad wait 30 minutes for one to open... Anyhow we want to summarise this data to some more useful interval: e.g. 1, 5, 10 minute means. There are two other complications with this data stream that must be dealt with: 1) the observations are not delimited (e.g. "M1493962402155400469126028200000000000000000000097500") and 2) when the IRGA zeros it outputs a bunch of observations that are not particularly useful.
+
+In this repo you will find:
+
+1. A datafile created by PuTTY with WMA-4: AmbientCO2_Chamber2.log
+2. An R script for processing that (or your) WMA-4 datafile: Script_for_reading_PuTTY_output.R
+    - This script will take the datafile and some identifying information (entered manually) as input. Temperature and RH are calculated from their millivolt signals according to the particulars of the sensor we use (Vaisala HMP60) - these values obviously need to change if you use something else. The data is then put into a dataframe and summarized into one minute (easily modified to your needs) averages in a second dataframe, which is saved to the working directory as a .csv file named with the identifying information and the year, month, and day that the data begins. 
